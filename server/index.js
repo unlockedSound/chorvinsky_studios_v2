@@ -3,6 +3,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Updated for Railway deployment
+
 const app = express();
 const PORT = process.env.PORT || 3002;
 
@@ -57,6 +59,48 @@ app.get('/api/health', async (req, res) => {
 // Basic route for testing
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });
+});
+
+// Contact form endpoint
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+    
+    // Basic validation
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({
+        error: 'All fields are required'
+      });
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        error: 'Invalid email format'
+      });
+    }
+    
+    // For now, just log the contact form data
+    // In a real application, you would save this to the database
+    console.log('Contact form submission:', {
+      name,
+      email,
+      subject,
+      message,
+      timestamp: new Date().toISOString()
+    });
+    
+    res.json({
+      success: true,
+      message: 'Contact form submitted successfully'
+    });
+  } catch (error) {
+    console.error('Contact form error:', error);
+    res.status(500).json({
+      error: 'Failed to submit contact form'
+    });
+  }
 });
 
 // Error handling middleware

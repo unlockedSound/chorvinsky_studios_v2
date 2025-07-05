@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Film from './components/Film';
+import ContactForm from './components/ContactForm';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
@@ -18,6 +19,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/film" element={<Film />} />
+                    <Route path="/contact" element={<ContactForm />} />
                 </Routes>
                 <Footer/>
             </div>
